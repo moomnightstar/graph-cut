@@ -1,0 +1,75 @@
+function main()
+%MAIN 此处显示有关此函数的摘要
+%   此处显示详细说明
+%%
+%database1:Books about US Politics
+A=load('polbooks.mat','A');
+k=load('polbooks.mat','k');
+
+nafp=fopen('polbooks_NMI_ACC.txt','w');
+
+clustering = alinkjaccard( A.A,k.k );
+fp=fopen('polbooks_alinkjaccard.txt','w');
+fprintf(fp,'%d\n',clustering);
+fclose(fp);
+[NMI,ACC] = evaluation('polbooks_alinkjaccard.txt','polbooks_gd.txt',k.k);
+fprintf(nafp,'alinkjaccard: NMI:%f ACC:%f \n',NMI,ACC);
+clustering = girvannewman( A.A,k.k );
+fp=fopen('polbooks_girvanewman.txt','w');
+fprintf(fp,'%d\n',clustering);
+fclose(fp);
+[NMI,ACC] = evaluation('polbooks_girvanewman.txt','polbooks_gd.txt',k.k);
+fprintf(nafp,'girvanewman: NMI:%f ACC:%f \n',NMI,ACC);
+fclose(nafp);
+%%
+
+%%
+%database2:football
+A=load('football.mat','A');
+k=load('football.mat','k');
+nafp=fopen('football_NMI_ACC.txt','w');
+
+clustering = alinkjaccard( A.A,k.k );
+fp=fopen('football_alinkjaccard.txt','w');
+fprintf(fp,'%d\n',clustering);
+fclose(fp);
+[NMI,ACC] = evaluation('football_alinkjaccard.txt','football_gd.txt',k.k);
+fprintf(nafp,'alinkjaccard: NMI:%f ACC:%f \n',NMI,ACC);
+clustering = girvannewman( A.A,k.k );
+fp=fopen('football_girvanewman.txt','w');
+fprintf(fp,'%d\n',clustering);
+fclose(fp);
+[NMI,ACC] = evaluation('football_girvanewman.txt','football_gd.txt',k.k);
+fprintf(nafp,'girvanewman: NMI:%f ACC:%f \n',NMI,ACC);
+fclose(nafp);
+%%
+
+%%
+%database3:DBLP
+A=load('DBLP.mat','A');
+k=load('DBLP.mat','k');
+clustering = alinkjaccard( A.A,k.k );
+fp=fopen('DBLP_alinkjaccard.txt','w');
+fprintf(fp,'%d\n',clustering);
+fclose(fp);
+clustering = girvannewman( A.A,k.k );
+fp=fopen('DBLP_girvanewman.txt','w');
+fprintf(fp,'%d\n',clustering);
+fclose(fp);
+%%
+
+%%
+%database4:Egonet
+x=load('Egonet.mat','x');
+clustering = alinkjaccard( x.x,10);
+fp=fopen('Egonet_alinkjaccard.txt','w');
+fprintf(fp,'%d\n',clustering);
+fclose(fp);
+clustering = girvannewman(x.x,10 );
+fp=fopen('Egonet_girvanewman.txt','w');
+fprintf(fp,'%d\n',clustering);
+fclose(fp);
+%%
+
+end
+
